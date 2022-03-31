@@ -1,7 +1,7 @@
 package com.mimoza_app.shoppinglist.Domain
 
-class EditShopItem(private val shopListRepository: ShopListRepository) {
-    fun editShopItemUseCase(shopItem:ShopItem){
+class EditShopItemUseCase(private val shopListRepository: ShopListRepository) {
+    fun editShopItem(shopItem:ShopItem){
         shopListRepository.editShopItem(shopItem)
     }
 }
