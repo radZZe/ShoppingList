@@ -11,27 +11,21 @@ import com.mimoza_app.shoppinglist.Domain.ShopItem
 
 class MainViewModel : ViewModel() {
     private val repository = ShopListRepositoryImpl
-    val shopList = MutableLiveData<List<ShopItem>>()
 
     private val getShopListUseCase = GetShopListUseCase(repository)
     private val deleteShopItemUseCase = DeleteShopItemUseCase(repository)
     private val editShopItemUseCase = EditShopItemUseCase(repository)
 
-    fun getShopList(){
-        val list = getShopListUseCase.getShopList()
-        shopList.value = list
-    }
+    val shopList = getShopListUseCase.getShopList()
+
 
     fun deleteShopItem(shopItem: ShopItem){
         deleteShopItemUseCase.deleteShopItem(shopItem)
-        getShopList()
 
     }
 
-
     fun changeStateItem(shopItem: ShopItem){
         var newItem = shopItem.copy(active = !shopItem.active)
-        editShopItemUseCase.editShopItem(shopItem)
-        getShopList()
+        editShopItemUseCase.editShopItem(newItem)
     }
 }

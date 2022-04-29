@@ -1,24 +1,33 @@
 package com.mimoza_app.shoppinglist.Data
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.mimoza_app.shoppinglist.Domain.ShopItem
 import com.mimoza_app.shoppinglist.Domain.ShopListRepository
 import java.lang.RuntimeException
+import kotlin.random.Random
 
 object ShopListRepositoryImpl:ShopListRepository {
 
-    private val shopList = mutableListOf<ShopItem>()
+    private val shopListLD = MutableLiveData<List<ShopItem>>()
+    private val shopList = sortedSetOf<ShopItem>({o1,o2 -> o1.id.compareTo(o2.id)})
 
     init {
-        for (i in 0 until 10){
-            val item = ShopItem("Name$i",24,true)
+        for (i in 0 until 100){
+            val item = ShopItem("Name$i",24, Random.nextBoolean())
             addShopItem(item)
         }
     }
 
     private var autoIncrementId  = 0
 
-    override fun getShopList(): List<ShopItem> {
-        return shopList.toMutableList()
+
+    fun updateList(){
+        shopListLD.value = shopList.toMutableList()
+    }
+
+    override fun getShopList(): LiveData<List<ShopItem>> {
+        return shopListLD
     }
 
     override fun getShopItem(id: Int): ShopItem {
@@ -30,6 +39,7 @@ object ShopListRepositoryImpl:ShopListRepository {
             shopItem.id = autoIncrementId++
         }
         shopList.add(shopItem)
+        updateList()
     }
 
     override fun editShopItem(shopItem: ShopItem) {
@@ -41,6 +51,7 @@ object ShopListRepositoryImpl:ShopListRepository {
 
     override fun deleteShopItem(shopItem: ShopItem) {
         shopList.remove(shopItem)
+        updateList()
     }
 
 }
