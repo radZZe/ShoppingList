@@ -1,8 +1,8 @@
 package com.mimoza_app.shoppinglist.Domain
 
 data class ShopItem(
-    val name: String,
-    val count: Int,
+    var name: String,
+    var count: Int,
     val active: Boolean,
     var id: Int = UNDEFINED_ID
 ){

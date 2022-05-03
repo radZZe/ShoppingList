@@ -1,5 +1,6 @@
 package com.mimoza_app.shoppinglist.Presentation
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -27,6 +28,11 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         viewModel.shopList.observe(this) {
             shopListAdapter.submitList(it)
+        }
+
+        binding.floatingActionButton.setOnClickListener {
+            val intent = ShopItemActivity.newIntentAddItem(this)
+            startActivity(intent)
         }
 
     }
@@ -78,7 +84,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupClickListener() {
         shopListAdapter.onShopItemClickListener = {
-            Log.d("MyLog", "${it.name} ${it.count} ${it.active}")
+            val intent = ShopItemActivity.newIntentEditItem(this,it.id)
+            startActivity(intent)
         }
     }
 
@@ -87,5 +94,7 @@ class MainActivity : AppCompatActivity() {
             viewModel.changeStateItem(it)
         }
     }
+
+
 
 }
