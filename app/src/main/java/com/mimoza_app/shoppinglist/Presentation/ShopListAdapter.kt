@@ -19,7 +19,7 @@ class ShopListAdapter :ListAdapter<ShopItem,ShopItemViewHolder>(ShopItemDiffCall
         val layout = when(viewType){
             ENABLED_LAYOUT -> R.layout.item_shop_enabled
             DISABLED_LAYOUT -> R.layout.item_shop_disabled
-            else -> throw RuntimeException("Unknown view type ${viewType}")
+                        else -> throw RuntimeException("Unknown view type ${viewType}")
         }
         view = LayoutInflater.from(parent.context).inflate(layout, parent, false)
         return ShopItemViewHolder(view)
@@ -37,6 +37,11 @@ class ShopListAdapter :ListAdapter<ShopItem,ShopItemViewHolder>(ShopItemDiffCall
             onShopItemLongClickListener?.invoke(shopItem)
             true
         }
+    }
+
+    override fun onViewAttachedToWindow(holder: ShopItemViewHolder) {
+        super.onViewAttachedToWindow(holder)
+
     }
 
 

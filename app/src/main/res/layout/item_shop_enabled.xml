@@ -18,8 +18,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#CD0074"
-            android:backgroundTint="#CD0074"
+            android:background="#000ACD"
+            android:backgroundTint="#000ACD"
             android:gravity="center"
             android:orientation="horizontal">
 
